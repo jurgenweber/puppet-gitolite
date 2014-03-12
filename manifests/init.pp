@@ -39,6 +39,9 @@
 # [*manage_perl*]
 #   If this is set to true, the Perl package for Time::HiRes will be installed
 #   if necessary. Defaults to 'false.'
+# [*umask*]
+#   A value for the gitolite UMASK.  This defaults to '0077'.  It may be
+#   desirable to have a different umask for third-party applications.
 #
 # === Examples
 #
@@ -71,7 +74,8 @@ class gitolite(
   $key_user        = $gitolite::params::key_user,
   $pubkey          = $gitolite::params::pubkey,
   $manage_perl     = $gitolite::params::manage_perl,
-  $perl_package    = $gitolite::params::perl_package
+  $perl_package    = $gitolite::params::perl_package,
+  $umask           = $gitolite::params::umask,
 ) inherits gitolite::params {
 
   if ($key_user == undef or $pubkey == undef) {
@@ -178,5 +182,12 @@ class gitolite(
     refreshonly => true,
     require     => File["${home_path}/bin"],
     before      => File["${home_path}/repositories"],
+  }
+
+  file_line { 'gitolite_umask':
+    path    => "${home_path}/.gitolite.rc",
+    match   => 'UMASK\s+=>\s',
+    line    => "    UMASK                           => ${umask},",
+    require => Exec['setup_gitolite'],
   }
 }

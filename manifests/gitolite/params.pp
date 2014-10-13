@@ -10,6 +10,7 @@ class gitolite::params {
   $key_user        = undef
   $pubkey          = undef
   $manage_perl     = false
+  $umask           = '0077'
 
   case $::osfamily {
     'redhat': {

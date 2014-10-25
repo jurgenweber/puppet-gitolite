@@ -120,7 +120,7 @@ class gitolite(
     group   => $group_name,
     mode    => '0750',
     recurse => true,
-  } ->
+  }
 
   file { "${home_path}/repositories":
     ensure  => directory,

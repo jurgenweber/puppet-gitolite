@@ -7,12 +7,29 @@ class gitolite::params {
   $user_ensure     = true
   $home_path       = "/home/${user_name}"
   $source_type     = 'git'
-  $package_version = present
+  $package_version = 'present'
   $source_path     = 'git://github.com/sitaramc/gitolite'
   $key_user        = undef
   $pubkey          = undef
   $manage_perl     = false
   $umask           = '0077'
+
+  validate_string($group_name)
+  validate_string($user_name)
+  validate_absolute_path($home_path)
+  validate_string($source_type)
+  validate_string($package_version)
+  validate_string($source_path)
+
+  if $key_user != undef {
+    validate_string($key_user)
+  }
+
+  if $pubkey != undef {
+    validate_string($pubkey)
+  }
+
+  validate_re($umask, '^[0-7]{4}$', "Invalid umask. Detected umask is <${umask}>.")
 
   case $::osfamily {
     'RedHat': {

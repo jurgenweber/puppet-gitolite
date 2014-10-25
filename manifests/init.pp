@@ -142,24 +142,24 @@ class gitolite(
   case $source_type {
     'package': {
       package { 'gitolite':
-        ensure    => $package_version,
-        source    => $source_path,
-        notify    => Exec['install_gitolite'],
+        ensure => $package_version,
+        source => $source_path,
+        notify => Exec['install_gitolite'],
       }
     }
     'tarball': {
       staging::file { 'gitolite':
-        source    => $source_path,
-        notify    => Exec['install_gitolite'],
+        source => $source_path,
+        notify => Exec['install_gitolite'],
       }
     }
     'git': {
       vcsrepo { "${home_path}/gitolite":
-        ensure    => present,
-        provider  => git,
-        user      => $user_name,
-        source    => $source_path,
-        notify    => Exec['install_gitolite'],
+        ensure   => present,
+        provider => git,
+        user     => $user_name,
+        source   => $source_path,
+        notify   => Exec['install_gitolite'],
       }
     }
     default: { fail("source_type ${source_type} is undefined. Must be one of package, tarball, git.") }

@@ -1,3 +1,5 @@
+# Class: gitolite::params
+#
 class gitolite::params {
   $group_name      = 'git'
   $user_name       = 'git'

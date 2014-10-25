@@ -1,6 +1,6 @@
 name    'eshamow-gitolite'
 version '0.2.0'
-source 'git://github.com/eshamow/eshamow-gitolite.git'
+source 'git://github.com/eshamow/puppet-gitolite.git'
 author 'Eric J Shamow'
 license 'Apache License, Version 2.0'
 summary 'Module to install and configure gitolite'

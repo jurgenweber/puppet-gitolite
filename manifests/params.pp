@@ -15,14 +15,44 @@ class gitolite::params {
   $umask           = '0077'
 
   case $::osfamily {
-    'redhat': {
+    'RedHat': {
       case $::operatingsystemmajrelease {
         '5': { $perl_package = 'perl-Time-modules' }
         '6': { $perl_package = 'perl-Time-HiRes' }
-        default: { $perl_package = undef }
+        default: {
+          fail("Gitolite supports RedHat 5 and 6. Detected version is <${::operatingsystemmajrelease}>.")
+        }
       }
     }
-    'debian': { $perl_package = 'libtime-hires-perl' }
-    default:  { $perl_package = undef }
+    'Debian': {
+      case $::operatingsystem {
+        'Debian': {
+          case $::operatingsystemmajrelease {
+            '6','7': {
+            $perl_package = 'libtime-hires-perl'
+            }
+            default: {
+              fail("Gitolite supports Debian 6 and 7. Detected version is <${::operatingsystemmajrelease}>.")
+            }
+          }
+        }
+        'Ubuntu': {
+          case $::operatingsystemmajrelease {
+            '12.04': {
+            $perl_package = 'libtime-hires-perl'
+            }
+            default: {
+              fail("Gitolite supports Ubuntu 12.04. Detected version is <${::operatingsystemmajrelease}>.")
+            }
+          }
+        }
+        default: {
+          fail("Gitolite supports operatingsystems Debian and Ubuntu within the osfamily Debian. Detected operatingsystem is <${::operatingsystem}>.")
+        }
+      }
+    }
+    default: {
+      fail("Gitolite supports osfamilies RedHat and Debian. Detected osfamily is <${::osfamily}>.")
+    }
   }
 }

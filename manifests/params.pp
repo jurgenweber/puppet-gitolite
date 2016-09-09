@@ -1,3 +1,7 @@
+# vim: set ft=puppet :
+#
+#
+#
 class gitolite::params {
   $group_name      = 'git'
   $user_name       = 'git'

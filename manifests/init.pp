@@ -1,3 +1,4 @@
+# vim: set ft=puppet :
 # == Class: gitolite
 #
 # Manages gitolite v3
